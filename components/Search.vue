@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input placeholder="Поиск">
+    <input placeholder="Поиск" @input="updateSearch" :value="$store.state.post.search !== defaultSearch ? $store.state.post.search : ''">
     <div class="image">
       <img src="~/assets/images/search.svg" alt="search-img">
     </div>
@@ -8,8 +8,29 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapState } from 'vuex'
+import { QueryDefaultValue } from '../types/QueryDefaultValue'
+
 export default {
-  name: 'SearchInput'
+  name: 'SearchInput',
+  data () {
+    return {
+      defaultSearch: QueryDefaultValue.search
+    }
+  },
+  computed: {
+
+  },
+  methods: {
+    updateSearch (event) {
+      this.$store.commit('post/changeSearch', event.target.value !== '' ? event.target.value : QueryDefaultValue.search)
+      this.$store.commit('post/changePage', 1)
+      this.$router.push({
+        query: { search: event.target.value }
+      })
+    }
+  }
+
 }
 </script>
 

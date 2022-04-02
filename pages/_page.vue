@@ -17,23 +17,27 @@ import { QueryDefaultValue } from '~/types/QueryDefaultValue'
 
 export default Vue.extend({
   name: 'IndexPage',
-  components: { PagePagination, NewsContainer, FiltersMenu },
+  components: {
+    PagePagination,
+    NewsContainer,
+    FiltersMenu
+  },
   async asyncData ({ store }) {
-    const localeBuffer = await fetchNews()
-    store.commit('post/setBuffer', localeBuffer)
+    if (store.state.post.buffer.length < 1) {
+      const localeBuffer = await fetchNews()
+      store.commit('post/setBuffer', localeBuffer)
+    }
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
     ...mapActions({
       // asyncData: 'post/asyncData'
     })
   },
-  created () {
+  mounted () {
     this.$route.query.search !== QueryDefaultValue.search && this.$store.commit('post/changeSearch', this.$route.query.search)
     this.$route.query.source && this.$store.commit('post/changeSource', this.$route.query.source)
-    this.$route.params.page && this.$store.commit('post/changePage', this.$route.params.page)
+    this.$route.params.page && this.$store.commit('post/changePage', parseInt(this.$route.params.page))
   }
 })
 </script>

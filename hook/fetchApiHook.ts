@@ -37,5 +37,5 @@ export const fetchNews = async () => {
     console.log(`Failed to get data from Lenta.ru. ${error.message}`)
   }
 
-  return localeBuffer
+  return localeBuffer.sort((a, b) => a.date + b.date)
 }

@@ -1,4 +1,4 @@
 export enum QueryDefaultValue {
-  search = "notSearch",
-  source = "all"
+  search = 'notSearch',
+  source = 'all'
 }
