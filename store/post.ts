@@ -13,15 +13,23 @@ export interface State {
   newsQuantity: number;
   page: number;
   limit: number;
+  queryes: {
+    search: string
+    source: string
+  }
 }
 
 export const state = (): State => ({
   buffer: [],
   news: [],
+  queryes: {
+    search: QueryDefaultValue.search,
+    source: QueryDefaultValue.source,
+  },
   newsQuantity: 0,
   page: 1,
   limit: 3,
-  search: 'notSearch',
+  search: QueryDefaultValue.search,
   source: QueryDefaultValue.source,
   viewFilter: ViewValues.fullWidth
 })
@@ -44,6 +52,13 @@ export const mutations = {
   },
   changePage (state: State, page: number) {
     state.page = page
+  },
+  changeLimit (state: State, limit: number) {
+    state.limit = limit
+  },
+  setQueryes (state: State) {
+    state.queryes.search = state.search
+    state.queryes.source = state.source
   }
 }
 
@@ -83,7 +98,6 @@ export const getters = {
     let startPoint: number
     let endPoint: number
 
-    console.log(page)
     const startPointFormula = () => {
       if (quantity > 4) {
         if (page + 2 < quantity) {
@@ -118,22 +132,19 @@ export const getters = {
     const setPoints = () => {
       startPoint = startPointFormula()
       endPoint = endPointFormula()
-      updatePagesList()
     }
+    setPoints()
     const nextPages = () => {
       startPoint = ((startPoint + 4) <= (quantity - 4) ? startPoint + 4 : quantity - 4)
       endPoint = ((endPoint + 4) <= quantity ? endPoint + 4 : quantity)
       updatePagesList()
-      console.log(pagesNumber)
     }
 
     const prevPages = () => {
       startPoint = ((startPoint - 4) >= 1 ? startPoint - 4 : 1)
       endPoint = ((endPoint - 4) >= 1 ? endPoint - 4 : startPoint + 4)
-      updatePagesList()
     }
-
-    setPoints()
+    updatePagesList()
 
     return {
       prevPages,

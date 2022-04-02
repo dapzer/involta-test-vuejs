@@ -1,6 +1,5 @@
 <template>
   <div :class="view === defaultValues.fullWidth ? `${defaultValues.fullWidth} news__container` : 'news__container'">
-    <h1>{{ $store.state.post.newsQuantity }}</h1>
     <news-card
       v-for="news in buffer[0]"
       :key="news.index"

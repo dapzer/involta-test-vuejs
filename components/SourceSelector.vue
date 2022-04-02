@@ -41,10 +41,14 @@ export default {
   methods: {
     changeSource (value) {
       this.$store.commit('post/changeSource', value)
+      this.$store.commit('post/setQueryes')
       this.$router.push({
-        path: this.$route.path,
-        query: { source: value }
+        query: this.$store.state.post.queryes
       })
+      // this.$router.push({
+      //   path: this.$route.path,
+      //   query: { source: value }
+      // })
     }
   }
 }

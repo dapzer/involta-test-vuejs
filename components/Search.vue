@@ -25,9 +25,8 @@ export default {
     updateSearch (event) {
       this.$store.commit('post/changeSearch', event.target.value !== '' ? event.target.value : QueryDefaultValue.search)
       this.$store.commit('post/changePage', 1)
-      this.$router.push({
-        query: { search: event.target.value }
-      })
+      this.$store.commit('post/setQueryes')
+      this.$router.push({ path: '/1', query: this.$store.state.post.queryes })
     }
   }
 

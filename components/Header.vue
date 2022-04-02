@@ -2,7 +2,7 @@
   <div class="container">
     <div class="logo">
       <h1>Список новостей</h1>
-      <button>
+      <button @click="reset">
         <img src="~/assets/images/refresh.svg" alt="">
       </button>
     </div>
@@ -11,10 +11,20 @@
 </template>
 
 <script>
+import { QueryDefaultValue } from '../types/QueryDefaultValue'
 import SearchInput from './Search'
+
 export default {
   name: 'AppHeader',
-  components: { SearchInput }
+  components: { SearchInput },
+  methods: {
+    reset () {
+      this.$store.commit('post/changePage', 1)
+      this.$store.commit('post/changeSource', QueryDefaultValue.source)
+      this.$store.commit('post/changeSearch', QueryDefaultValue.search)
+      this.$router.push({ path: '/1', query: this.$store.state.post.queryes })
+    }
+  }
 }
 </script>
 

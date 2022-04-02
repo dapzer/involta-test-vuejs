@@ -4,12 +4,12 @@
       <button>
         <img src="~/assets/images/fullWidth-active.svg" alt="">
       </button>
-      <button @click="changeView(defaultValues.boxed)">
+      <button @click="changeView(defaultValues.boxed, 4)">
         <img src="~/assets/images/boxed.svg" alt="">
       </button>
     </div>
     <div v-if="selectedView === defaultValues.boxed">
-      <button @click="changeView(defaultValues.fullWidth)">
+      <button @click="changeView(defaultValues.fullWidth, 3)">
         <img src="~/assets/images/fullWidth.svg" alt="">
       </button>
       <button>
@@ -35,9 +35,20 @@ export default {
       selectedView: state => state.post.viewFilter
     })
   },
+  beforeMount () {
+    if (localStorage.view) {
+      this.$store.commit('post/changeView', localStorage.view)
+      this.$store.commit('post/changeLimit', localStorage.limit)
+    }
+  },
   methods: {
-    changeView (value) {
+    changeView (value, limit) {
       this.$store.commit('post/changeView', value)
+      this.$store.commit('post/changeLimit', limit)
+      this.$store.commit('post/changePage', 1)
+      this.$router.push({ path: '/1', query: this.$store.state.post.queryes })
+      localStorage.view = value
+      localStorage.limit = limit
     }
   }
 }

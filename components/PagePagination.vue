@@ -41,7 +41,7 @@ export default {
   methods: {
     changeCurrentPage (value) {
       this.$store.commit('post/changePage', value)
-      this.$router.push({ path: `/${value}`})
+      this.$router.push({ path: `/${value}`, query: this.$store.state.post.queryes })
     }
   }
 
