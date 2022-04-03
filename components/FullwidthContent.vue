@@ -2,10 +2,10 @@
   <div class="content">
     <img :src="post.img" alt="">
     <div>
-      <a :href="post.link">{{ post.title }}</a>
+      <a :href="post.link" target="_blank">{{ post.title }}</a>
       <p>{{ post.description }}</p>
     </div>
-    <a class="footer__link" :href="post.link">Подробнее</a>
+    <a class="footer__link" :href="post.link" target="_blank">Подробнее</a>
   </div>
 </template>
 

@@ -42,13 +42,8 @@ export default {
     changeSource (value) {
       this.$store.commit('post/changeSource', value)
       this.$store.commit('post/setQueryes')
-      this.$router.push({
-        query: this.$store.state.post.queryes
-      })
-      // this.$router.push({
-      //   path: this.$route.path,
-      //   query: { source: value }
-      // })
+      this.$store.commit('post/changePage', 1)
+      this.$router.push({ path: '/1', query: this.$store.state.post.queryes })
     }
   }
 }
